@@ -12,7 +12,9 @@ Running The Converter
 ^^^^^^^^^^^^^^^^^^^^^
 
 * Arguments -
-	REQUIRED ARGUMENTS::  input file, outputfile OPTIONAL ARGUMENTS: SID starting # (default 1000000), input rule type (default SURRICATA), output rule type (default SNORT3)
+	REQUIRED ARGUMENTS::  input file, outputfile 
+	
+	OPTIONAL ARGUMENTS: SID starting # (default 1000000), input rule type (default SURRICATA), output rule type (default SNORT3)
 
 * To run the tool via python::
 
