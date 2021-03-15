@@ -30,7 +30,7 @@ For **convenience** you can use the defaults
 
     $ python snort3convert.py surricatarules.txt snort3rules.txt
     
-* To run the short form of the above windows comman using defaults::
+* To run the short form of the above windows command using defaults::
 
     $ snort3convert.exe surricatarules.txt snort3rules.txt
 
