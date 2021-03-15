@@ -1,5 +1,6 @@
 import re
 from unidecode import unidecode
+import argparse
 import time
 
 
@@ -88,7 +89,7 @@ def IndexSelector (item2):
     # Search for keywords based in Ingest Selector to build index list
     selector = False
 
-    if ingestselector == "SURRICATA":
+    if args.source_rule_type == "SURRICATA":
         for item in SurricataChunkKeywords:
             if item2.find(item) != -1:
                 selector = True
@@ -234,13 +235,25 @@ SurricataChunkKeywords = ["ssl","alert","msg:","flow:","content:","reference:","
 
 
 if __name__ == '__main__':
+    # TODO: Add McAfee, Forescout, Fortinet, Snort2
+
+    # Initialize Argument Parser
+    parser = argparse.ArgumentParser(description="Program Accepts Selected rule input and converts to selected output \
+    rule type.")
+    parser.add_argument("input_file", type=str, help="Full path to Source File")
+    parser.add_argument("output_file", type=str, help="Full path for Output File")
+    parser.add_argument("--source_rule_type", type=str, help="Source Rule OPTIONS: Surricata", default="SURRICATA")
+    parser.add_argument("--output_rule_type", type=str, help="Output Rule OPTIONS: Snort3", default="SNORT3")
+    parser.add_argument("--SID", type=int, help="Starting SID value for Snort rules", default="1000001")
+    args = parser.parse_args()
+
     start = time.time()
     # Choose SID starting number for bulk SNORT import
-    sidstartselecter = 1000001
+    sidstartselecter = args.SID
     # Choose ingest rule format
-    ingestselector = "SURRICATA"
+    ingestselector = args.source_rule_type
     # Choose output rule format
-    outputselector = "SNORT3"
+    outputselector = args.output_rule_type
 
 
     # Create Rule List from Ingest Set
