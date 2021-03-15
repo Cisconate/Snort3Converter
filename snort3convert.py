@@ -63,6 +63,7 @@ def contentchangersnort3(contentlist):
 # Helper Function takes SID and Generates new sequential ID's over 1000000 if they are BELOW, otherwise does nothing
 def sidchangersnort3(sidlist):
     global sidstartselecter
+
     tmp = sidlist[0].split(":")
     if int(tmp[1]) <= sidstartselecter:
         sidlist[0] = "sid:" + str(sidstartselecter)
@@ -71,10 +72,10 @@ def sidchangersnort3(sidlist):
 
 
 # Helper function selects delimiters based on selected output format
-def SyntaxSelector(state):
+def SyntaxSelector(state, output3):
     # Based on Output Selector, convert to proper fields for output syntax
     syntax = ""
-    if outputselector == "SNORT3":
+    if output3 == "SNORT3":
         if state == False:
             syntax = ","
         elif state == True:
@@ -85,11 +86,11 @@ def SyntaxSelector(state):
 
 
 # Helper function selects which keywords generate the Rule Index
-def IndexSelector (item2):
+def IndexSelector (item2, ingester2):
     # Search for keywords based in Ingest Selector to build index list
     selector = False
 
-    if args.source_rule_type == "SURRICATA":
+    if ingester2 == "SURRICATA":
         for item in SurricataChunkKeywords:
             if item2.find(item) != -1:
                 selector = True
@@ -99,9 +100,9 @@ def IndexSelector (item2):
 
 
 # Helper function the lookup table for conversions and calls the conversion functions
-def keywordselector(searchitem, lista):
+def keywordselector(searchitem, lista, output3):
     # Based on Selector, convert to proper fields for output syntax
-    if outputselector == "SNORT3":
+    if output3 == "SNORT3":
         if searchitem.find("http_user_agent") != -1:
             lista = convertuseragentsnort3(lista)
         elif searchitem.find("reference") != -1:
@@ -157,14 +158,14 @@ def SanitizeIngestList(lista):
 
 
 # This function creates an index for each rule in the list given to it
-def GenerateRuleIndex(rulelist2):
+def GenerateRuleIndex(rulelist2, ingester):
     indexlist2 = []
     statecheck = False
     # Search rule keywords and create index for "chunking"
     for index3, item3 in enumerate(rulelist2):
         indexlist2.append([])
         for item2 in item3:
-            statecheck = IndexSelector(item2)
+            statecheck = IndexSelector(item2, ingester)
             if statecheck == True:
                 indexlist2[index3].append(True)
             else:
@@ -174,7 +175,7 @@ def GenerateRuleIndex(rulelist2):
 
 
 # This function enumerates the INGEST rules and converts them to OUTPUT syntax
-def ConvertList(indexlist3, ruleslist3):
+def ConvertList(indexlist3, ruleslist3, output2):
     convertedlist = []
     templist = []
 
@@ -194,18 +195,18 @@ def ConvertList(indexlist3, ruleslist3):
             # print(indexlist3[index][2:])
             # If indexlist is True then dump current chunk and convert list, start again
             if indexlist3[index][index4]:
-                templist.append(SyntaxSelector(indexlist3[index][index4]))
+                templist.append(SyntaxSelector(indexlist3[index][index4], output2))
                 for index2, item2 in enumerate(templist):
-                        templist = keywordselector(item2, templist)
+                        templist = keywordselector(item2, templist, output2)
                 for item3 in templist:
                     convertedlist[index].append(item3)
                 templist = []
                 templist.append(ruleslist3[index][index4])
             # Otherwise add to chunk
             else:
-                templist.append(SyntaxSelector(indexlist3[index][index4]))
+                templist.append(SyntaxSelector(indexlist3[index][index4], output2))
                 templist.append(ruleslist3[index][index4])
-        templist.append(SyntaxSelector(True))
+        templist.append(SyntaxSelector(True, output2))
         templist.append(")")
         for item3 in templist:
             convertedlist[index].append(item3)
@@ -231,11 +232,26 @@ def WriteRulesToFile(lista, outfilename):
             file1.write('\n')
 
 
+def main(sid, ingest, output, infile, outfile):
+    global sidstartselecter
+    sidstartselecter = sid
+
+    # Create Rule List from Ingest Set
+    StartList = CreateIntermediateList(infile)
+    # Create Index for Key words (based in Ingest Selector)
+    IndexList = GenerateRuleIndex(StartList, ingest)
+    # Generate the Base Output List
+    BaseOutputList = ConvertList(IndexList, StartList, output)
+    # User Emitter to generate final syntax rules
+    WriteRulesToFile(BaseOutputList, outfile)
+
+
 SurricataChunkKeywords = ["ssl","alert","msg:","flow:","content:","reference:","classtype:","metadata:","sid","rev"]
 
 
 if __name__ == '__main__':
     # TODO: Add McAfee, Forescout, Fortinet, Snort2
+    # TODO: Add Testing to ensure consistency
 
     # Initialize Argument Parser
     parser = argparse.ArgumentParser(description="Program Accepts Selected rule input and converts to selected output \
@@ -248,23 +264,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     start = time.time()
-    # Choose SID starting number for bulk SNORT import
-    sidstartselecter = args.SID
-    # Choose ingest rule format
-    ingestselector = args.source_rule_type
-    # Choose output rule format
-    outputselector = args.output_rule_type
 
+    main(args.SID, args.source_rule_type, args.output_rule_type, args.input_file, args.output_file)
 
-    # Create Rule List from Ingest Set
-    StartList = CreateIntermediateList("surrilogs.txt")
-    # Create Index for Key words (based in Ingest Selector)
-    IndexList = GenerateRuleIndex(StartList)
-
-    # Generate the Base Output List
-    BaseOutputList = ConvertList(IndexList, StartList)
-    # User Emitter to generate final syntax rules
-    WriteRulesToFile(BaseOutputList, "snort3rules.txt")
     end = time.time()
     print(f"Runtime of the program is {end - start}")
 
