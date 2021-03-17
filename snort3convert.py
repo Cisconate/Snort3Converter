@@ -245,7 +245,7 @@ def main(sid, ingest, output, infile, outfile):
     writerulestofile(base_output_list, outfile)
 
 
-SurricataChunkKeywords = ["ssl", "alert", "msg:", "flow:", "content:", "reference:", "classtype:", "metadata:",
+SurricataChunkKeywords = ["pcre","isdataat","ssl", "alert", "msg:", "flow:", "content:", "reference:", "classtype:", "metadata:",
                           "sid", "rev"]
 
 
