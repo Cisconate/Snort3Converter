@@ -34,6 +34,14 @@ For **convenience** you can use the defaults
 
     $ snort3convert.exe surricatarules.txt snort3rules.txt
 
+TESTED Supported Surricata Functions:
+-------------------------------------
+This tool has currently been test on the following features:
+* URL
+* SSH
+* PCRE
+* User-Agent
+
 Deployment
 ----------
 
