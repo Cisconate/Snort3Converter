@@ -102,15 +102,15 @@ def indexselector(item2, ingester2):
 def keywordselector(searchitem, lista, output3):
     # Based on Selector, convert to proper fields for output syntax
     if output3 == "SNORT3":
-        if re.search("\\bhttp_user_agent\\b", searchitem) != -1:
+        if re.search("\\bhttp_user_agent\\b", searchitem) != None:
             lista = convertuseragentsnort3(lista)
-        elif re.search("\\breference\\b", searchitem) != -1:
+        elif re.search("\\breference\\b", searchitem) != None:
             lista = convertreferencesnort3(lista)
-        elif re.search("\\bhttp_header\\b", searchitem) != -1:
+        elif re.search("\\bhttp_header\\b", searchitem) != None:
             lista = converthttpheadersnort3(lista)
         elif re.search("\\bsid\\b", searchitem) != None:
             lista = sidchangersnort3(lista)
-        elif re.search("\\bcontent\\b") != -1:
+        elif re.search("\\bcontent\\b", searchitem) != None:
             lista = contentchangersnort3(lista)
     return lista
 
