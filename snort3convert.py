@@ -122,18 +122,19 @@ def createintermediatelist(rulefile):
         # Read non-empty lines from file
         lines = [line for line in file1.readlines() if line.strip()]
         for line in lines:
-            # remove leading and trailing white space from each line (rule)
-            line = line.strip()
-            # Strip smart quotes only works on STRINGS so best to do it now...
-            line = unidecode(line)
-            # Separate each rule component into a list
-            line = re.split(' \(|; ', line)
-            # Remove Trailing bracket and semicolon
-            line[-1] = line[-1][:-2]
-            # Sanitize multiple errors
-            line = sanitizeingestlist(line)
-            # compose rules into single list
-            ruleslist.append(line)
+            if line[0] != "#":
+                # remove leading and trailing white space from each line (rule)
+                line = line.strip()
+                # Strip smart quotes only works on STRINGS so best to do it now...
+                line = unidecode(line)
+                # Separate each rule component into a list
+                line = re.split(' \(|; ', line)
+                # Remove Trailing bracket and semicolon
+                line[-1] = line[-1][:-2]
+                # Sanitize multiple errors
+                line = sanitizeingestlist(line)
+                # compose rules into single list
+                ruleslist.append(line)
     return ruleslist
 
 
