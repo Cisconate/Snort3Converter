@@ -14,27 +14,27 @@ Running The Converter
 * Arguments -
 	REQUIRED ARGUMENTS::  input file, outputfile 
 	
-	OPTIONAL ARGUMENTS: SID starting # (default 1000000), input rule type (default SURRICATA), output rule type (default SNORT3)
+	OPTIONAL ARGUMENTS: SID starting # (default 1000000), input rule type (default SURICATA), output rule type (default SNORT3)
 
 * To run the tool via python::
 
-    $ python snort3convert.py surricatarules.txt snort3rules.txt --SID 1000010 --source_rule_type SURRICATA --output_rule_type SNORT3
+    $ python snort3convert.py suricatarules.txt snort3rules.txt --SID 1000010 --source_rule_type SURICATA --output_rule_type SNORT3
     
 * To run the tool via windows executeable::
 
-    $ snort3convert.exe surricatarules.txt snort3rules.txt --SID 1000010 --source_rule_type SURRICATA --output_rule_type SNORT3
+    $ snort3convert.exe suricatarules.txt snort3rules.txt --SID 1000010 --source_rule_type SURICATA --output_rule_type SNORT3
 
 For **convenience** you can use the defaults
 
 * To run the short form of the above python command using defaults::
 
-    $ python snort3convert.py surricatarules.txt snort3rules.txt
+    $ python snort3convert.py suricatarules.txt snort3rules.txt
     
 * To run the short form of the above windows command using defaults::
 
-    $ snort3convert.exe surricatarules.txt snort3rules.txt
+    $ snort3convert.exe suricatarules.txt snort3rules.txt
 
-TESTED Supported Surricata Functions:
+TESTED Supported Suricata Functions:
 -------------------------------------
 This tool has currently been test on the following features:
 

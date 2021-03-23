@@ -157,8 +157,8 @@ def index_selector(item2, ingester2):
     global keyword_tracker
     selector = False
 
-    if ingester2 == "SURRICATA":
-        for item in SurricataChunkKeywords:
+    if ingester2 == "SURICATA":
+        for item in SuricataChunkKeywords:
             if item2.find(item) != -1:
                 # Leading Keywords with possible content
                 if keyword_tracker == "dns.query" and item == "content:":
@@ -341,7 +341,7 @@ def main(sid, ingest, output, infile, outfile):
     write_rules_to_file(base_output_list, outfile)
 
 
-SurricataChunkKeywords = ["byte_test", "pcre", "isdataat", "ssl", "alert", "msg:", "flow:", "content:", "reference:",
+SuricataChunkKeywords = ["byte_test", "pcre", "isdataat", "ssl", "alert", "msg:", "flow:", "content:", "reference:",
                           "classtype:", "metadata:", "sid", "rev", "threshold", "dns.query"]
 
 
@@ -352,7 +352,7 @@ if __name__ == '__main__':
     rule type.")
     parser.add_argument("input_file", type=str, help="Full path to Source File")
     parser.add_argument("output_file", type=str, help="Full path for Output File")
-    parser.add_argument("--source_rule_type", type=str, help="Source Rule OPTIONS: Surricata", default="SURRICATA")
+    parser.add_argument("--source_rule_type", type=str, help="Source Rule OPTIONS: Suricata", default="SURICATA")
     parser.add_argument("--output_rule_type", type=str, help="Output Rule OPTIONS: Snort3", default="SNORT3")
     parser.add_argument("--SID", type=int, help="Starting SID value for Snort rules", default="1000001")
     args = parser.parse_args()
