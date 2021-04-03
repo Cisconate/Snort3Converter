@@ -362,4 +362,4 @@ if __name__ == '__main__':
     main(args.SID, args.source_rule_type, args.output_rule_type, args.input_file, args.output_file)
 
     end = time.time()
-    print(f"Runtime of the program is {end - start}")
+    logging.info(f"Runtime of the program is {end - start}")
