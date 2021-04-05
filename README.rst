@@ -12,19 +12,35 @@ Basic Commands
 Running The Converter
 ^^^^^^^^^^^^^^^^^^^^^
 
-* Arguments -
-	REQUIRED ARGUMENTS::  input file, outputfile 
-	
-	OPTIONAL ARGUMENTS: SID starting # (default 1000000), input rule type (default SURICATA), output rule type (default SNORT3)
+* Usage
+  
+  .. code-block:: bash
+    
+    usage: snort3convert.py [-h] [--source_rule_type SOURCE_RULE_TYPE] [--output_rule_type OUTPUT_RULE_TYPE] [--SID SID] input_file output_file  
+                                                                                                                                                
+    Program Accepts Selected rule input and converts to selected output rule type.                                                               
+                                                                                                                                                
+    positional arguments:                                                                                                                        
+      input_file            Full path to Source File                                                                                             
+      output_file           Full path for Output File                                                                                            
+                                                                                                                                                
+    optional arguments:                                                                                                                          
+      -h, --help            show this help message and exit                                                                                      
+      --source_rule_type SOURCE_RULE_TYPE                                                                                                        
+                            Source Rule OPTIONS: Suricata                                                                                        
+      --output_rule_type OUTPUT_RULE_TYPE                                                                                                        
+                            Output Rule OPTIONS: Snort3                                                                                          
+      --SID SID             Starting SID value for Snort rules                                                                                   
 
-* To run the tool via python
+
+* To run the tool via python (installed via pip)
 
   .. code-block:: bash
 
     $  pip install snort3_conv_tools
     $  python -m snort3_conv_tools.snort3convert testsuricatainputrules.txt snort3rules.txt --SID 1000010 --source_rule_type SURICATA --output_rule_type SNORT
     
-* To run the tool via windows executeable
+* To run the tool via windows executeable (from release page)
 
   .. code-block:: bash
 
@@ -64,13 +80,13 @@ User-Agent    supported
 Get Developing!
 ==========================
 
-If you wish to contribute to expand support or simply hack away then plesae do!
+If you wish to contribute to expand support or simply hack away then please do!
 
 Checkout the code:
 
 .. code-block:: bash
 
-   git clone http://github.com/RabidCicada/boardgame_framework
+   git clone https://github.com/Cisconate/Snort3Converter
 
 Install Dependencies:
 
