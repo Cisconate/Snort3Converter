@@ -3,7 +3,7 @@
 
 name: Upload Python Package
 
-environment: TestPypi
+
 
 on:
   release:
@@ -12,6 +12,7 @@ on:
 
 jobs:
   deploy:
+    environment: TestPypi
 
     runs-on: ubuntu-latest
 
