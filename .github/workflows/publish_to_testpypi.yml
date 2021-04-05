@@ -5,7 +5,10 @@ name: Upload Python Package
 
 environment: TestPypi
 
-on: workflow_dispatch
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
 
 jobs:
   deploy:
