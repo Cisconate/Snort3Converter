@@ -21,7 +21,8 @@ Running The Converter
 
   .. code-block:: bash
 
-    $ python snort3convert.py suricatarules.txt snort3rules.txt --SID 1000010 --source_rule_type SURICATA --output_rule_type SNORT3
+    $  pip install snort3_conv_tools
+    $  python -m snort3_conv_tools.snort3convert testsuricatainputrules.txt snort3rules.txt --SID 1000010 --source_rule_type SURICATA --output_rule_type SNORT
     
 * To run the tool via windows executeable
 

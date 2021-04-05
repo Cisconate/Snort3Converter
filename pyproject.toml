@@ -4,3 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 write_to = "src/snort3_conv_tools/version.py"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py36,py37,py38
+isolated_build = True
+
+[gh-actions]
+python =
+    3.6: py36
+    3.7: py37
+    3.8: py38
+
+[testenv]
+deps = -r{toxinidir}/requirements/dev.txt
+changedir = tests
+commands =
+    pytest
+"""

@@ -4,6 +4,7 @@ import argparse
 import time
 import logging
 
+
 logging.basicConfig(filename="snortconverterlog.txt", level=logging.DEBUG)
 
 global sid_start_selector
@@ -320,7 +321,7 @@ def write_rules_to_file(lista, out_filename):
             file1.write('\n')
 
 
-def main(sid, ingest, output, infile, outfile):
+def surricata_to_snort3(sid, ingest, output, infile, outfile):
     global sid_start_selector
     global keyword_tracker
     global converted_list
@@ -359,7 +360,7 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    main(args.SID, args.source_rule_type, args.output_rule_type, args.input_file, args.output_file)
+    surricata_to_snort3(args.SID, args.source_rule_type, args.output_rule_type, args.input_file, args.output_file)
 
     end = time.time()
     logging.info(f"Runtime of the program is {end - start}")
